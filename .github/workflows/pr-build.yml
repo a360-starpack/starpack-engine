@@ -1,0 +1,57 @@
+name: PR Build
+
+on: 
+  pull_request:
+
+jobs:
+  codecov:
+    runs-on: ubuntu-latest
+    env:
+      OS: ubuntu-latest
+      PYTHON: '3.10'
+      REQUEST_LINE_RATE: 0.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Python
+        uses: actions/setup-python@master
+        with:
+          python-version: 3.10
+      - name: Generate coverage report
+        run: |
+          pip install -r requirements.txt
+          pip install -r tests/requirements.txt
+          pytest --cov=./ --cov-report=xml
+      - name: Check coverage threshold
+        run: |
+          LINE_RATE=$(cat coverage.xml | grep line-rate | head -1 | awk '{print $6}' | awk -F '=' '{print $2}' | tr -d '"')
+          if (( $(echo "$LINE_RATE < $REQUEST_LINE_RATE" | bc -l) )); then
+            echo "The code coverage (line rate) $LINE_RATE is lower than $REQUEST_LINE_RATE."
+            exit 1
+          fi          
+
+  # security:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@master
+  #     - name: Run Snyk to check for vulnerabilities
+  #       uses: snyk/actions/python@master
+  #       env:
+  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  #       with:          
+  #         args: --severity-threshold=high  
+        
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Build, tag, and push image
+        run: |
+          IMAGE_TAG=${GITHUB_REF##*/}-${GITHUB_SHA}-$(date +%s)
+          docker build -t starpack/starpack-engine:$IMAGE_TAG -t starpack/starpack-engine:latest -f ./docker/starpack.Dockerfile --target prod .
+          docker push starpack/starpack-engine
+
