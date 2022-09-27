@@ -7,8 +7,6 @@ jobs:
   codecov:
     runs-on: ubuntu-latest
     env:
-      OS: ubuntu-latest
-      PYTHON: '3.10'
       REQUEST_LINE_RATE: 0.2
     steps:
       - name: Checkout
@@ -16,7 +14,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@master
         with:
-          python-version: 3.10
+          python-version: "3.10.7"
       - name: Generate coverage report
         run: |
           pip install -r requirements.txt
@@ -53,5 +51,14 @@ jobs:
         run: |
           IMAGE_TAG=${GITHUB_REF##*/}-${GITHUB_SHA}-$(date +%s)
           docker build -t starpack/starpack-engine:$IMAGE_TAG -t starpack/starpack-engine:latest -f ./docker/starpack.Dockerfile --target prod .
-          docker push starpack/starpack-engine
+
+      - name: Docker Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Docker Hub Push image
+        run:
+          docker push starpack/starpack-engine -a
 
