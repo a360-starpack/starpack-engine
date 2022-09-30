@@ -1,1 +1,1 @@
-uvicorn --host 0.0.0.0 --port 80 starpack.wsgi:app
+uvicorn --host 0.0.0.0 --port 80 starpack.asgi:app
