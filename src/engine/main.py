@@ -1,4 +1,5 @@
 import fastapi
+from .routers import test_plugins
 
 app = fastapi.FastAPI(
     title="Starpack Engine by Andromeda 360",
@@ -6,7 +7,9 @@ app = fastapi.FastAPI(
     version="0.0.1",
 )
 
+app.include_router(test_plugins.router)
+
 
 @app.get("/healthcheck")
-def hello_world():
+async def hello_world():
     return {"healthy": True}

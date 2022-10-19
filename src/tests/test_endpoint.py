@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from src.starpack.main import app
+from src.engine.main import app
 
 
 @pytest.fixture
