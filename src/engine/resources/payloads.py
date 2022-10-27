@@ -4,6 +4,7 @@ from typing import Optional, List
 
 class Metadata(BaseModel):
     name: str
+    description: Optional[str]
     version: Optional[str]
     author: Optional[str]
     author_email: Optional[str] = Field(None, alias="author-email")

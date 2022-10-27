@@ -20,14 +20,30 @@ class Dependency(BaseModel):
         return f"{self.name.strip()}{version}"
 
 
+class Argument(BaseModel):
+    name: str
+    type: Optional[str]
+
+
+class Resources(BaseModel):
+    input: List[Argument]
+    output: List[Argument]
+
+
 class Plugin(BaseModel):
     name: str
     version: str
     description: Optional[str]
+    folder: str
     module_name: str = Field(..., alias="module-name")
     entrypoint: str
     dependencies: Optional[List[Dependency]]
     function: Optional[Callable]
+
+    def load_method(self) -> None:
+        print(f"engine.plugins.{self.folder}.{self.module_name}")
+        module = import_module(f"engine.plugins.{self.folder}.{self.module_name}")
+        self.function = getattr(module, self.entrypoint)
 
     def install_dependencies(self) -> None:
         """
@@ -51,9 +67,8 @@ class Plugin(BaseModel):
                 print(e)
                 raise ImproperRequirementError()
 
-    def invoke(self) -> None:
-        print(f"engine.plugins.{self.name}.{self.module_name}")
-        module = import_module(f"engine.plugins.{self.name}.{self.module_name}")
-        infer_func = getattr(module, self.entrypoint)
+    def invoke(self, *args, **kwargs) -> None:
+        if self.function is None:
+            raise UnloadedPluginError()
 
-        return infer_func()
+        return self.function(*args, **kwargs)

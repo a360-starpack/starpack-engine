@@ -1,12 +1,10 @@
-from ..plugengine.engine import PluginEngine
+from ..plugengine import PluginEngine
 from fastapi import APIRouter
 
 router = APIRouter()
 
 
 @router.get("/test-plugin")
-async def test_plugin():
+async def test_plugin(plugin_name: str):
     engine = PluginEngine()
-    engine._discover()
-    engine._load()
-    return engine.invoke("example_plugin")
+    return engine.invoke(plugin_name)
