@@ -3,7 +3,7 @@ from fastapi import APIRouter
 
 from ..plugengine.engine import PluginEngine
 
-from ..resources.payloads import StarpackInput
+from ..schemas.payloads import StarpackInput
 from ..errors import *
 
 router = APIRouter()

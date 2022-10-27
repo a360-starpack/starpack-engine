@@ -3,7 +3,7 @@ from yaml import load, Loader
 from fastapi import HTTPException
 
 from .._config import settings
-from ..resources.plugins import Plugin
+from ..schemas.plugins import Plugin
 
 
 class PluginEngine:
