@@ -32,10 +32,11 @@ class Resources(BaseModel):
 
 class Plugin(BaseModel):
     name: str
+    type: str
     version: str
     description: Optional[str]
     folder: str
-    module_name: str = Field(..., alias="module-name")
+    module_name: str
     entrypoint: str
     dependencies: Optional[List[Dependency]]
     function: Optional[Callable]
