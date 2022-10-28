@@ -33,7 +33,7 @@ def package(artifacts: Artifacts, metadata: Metadata, custom_input: str = ""):
     # Create Dockerfile
     dockerfile_template_mapping = {
         "dependency_install": "",
-        "custom_input": custom_input,
+        "custom_input": custom_input if custom_input else "",
         "name": metadata.name,
     }
 
@@ -61,4 +61,4 @@ def package(artifacts: Artifacts, metadata: Metadata, custom_input: str = ""):
         tag=metadata.name,
     )
 
-    return {"image": image}
+    return {"image": image[0]}

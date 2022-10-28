@@ -1,6 +1,10 @@
-name: fastapi
-type: wrapper
+name: docker_desktop_push
 module_name: main
-entrypoint: package
+entrypoint: tag_image
 version: 1.0.0
 description: Packages a set of model artifacts with a FastAPI wrapper.
+dataflow:
+  input:
+    - image
+    - metadata
+    - step_data

@@ -1,5 +1,4 @@
 name: example_plugin
-type: custom
 module_name: main
 version: 1.0.0
 description: I made this to test my plugin system.

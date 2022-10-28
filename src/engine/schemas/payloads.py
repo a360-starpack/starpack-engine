@@ -32,8 +32,7 @@ class Artifacts(BaseModel):
 
 
 class Step(BaseModel):
-    type: str
-    backend: str
+    name: str
     version: Optional[str]
 
     class Config:

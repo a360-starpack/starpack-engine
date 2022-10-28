@@ -1,1 +1,0 @@
-{"name": "test_package", "version": "0.0.1", "description": "Testing package", "validation_data": null, "inference": {"function_name": "predict", "script_name": "predict.py", "model_data": "pred_heart_disease.pkl"}}

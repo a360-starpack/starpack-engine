@@ -1,6 +1,6 @@
 import sys
 from pydantic import BaseModel, Field
-from typing import Optional, List, Callable
+from typing import Any, Dict, Optional, List, Callable
 import subprocess
 from ..errors import *
 from importlib import import_module
@@ -20,29 +20,23 @@ class Dependency(BaseModel):
         return f"{self.name.strip()}{version}"
 
 
-class Argument(BaseModel):
-    name: str
-    type: Optional[str]
-
-
-class Resources(BaseModel):
-    input: List[Argument]
-    output: List[Argument]
+class DataFlow(BaseModel):
+    input: Optional[List[str]]
+    output: Optional[List[str]]
 
 
 class Plugin(BaseModel):
     name: str
-    type: str
     version: str
     description: Optional[str]
     folder: str
     module_name: str
     entrypoint: str
+    dataflow: Optional[DataFlow]
     dependencies: Optional[List[Dependency]]
     function: Optional[Callable]
 
     def load_method(self) -> None:
-        print(f"engine.plugins.{self.folder}.{self.module_name}")
         module = import_module(f"engine.plugins.{self.folder}.{self.module_name}")
         self.function = getattr(module, self.entrypoint)
 
@@ -68,8 +62,11 @@ class Plugin(BaseModel):
                 print(e)
                 raise ImproperRequirementError()
 
-    def invoke(self, *args, **kwargs) -> None:
+    def invoke(self, input_data: Dict[str, Any]) -> None:
+        plugin_input = {key: input_data.get(key) for key in self.dataflow.input}
         if self.function is None:
             raise UnloadedPluginError()
 
-        return self.function(*args, **kwargs)
+        output = self.function(**plugin_input)
+
+        input_data.update(output)

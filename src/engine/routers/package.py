@@ -20,8 +20,13 @@ async def package(starpack_input: StarpackInput):
         raise MissingPackageInput()
 
     package_input = starpack_input.package
+    datastore["artifacts"] = package_input.artifacts
+    datastore["metadata"] = package_input.metadata
 
     for step in package_input.steps:
-        engine.invoke(step.type)
+        print(f"Running {step.name}")
+        datastore["step_data"] = step.dict()
+        engine.invoke(step.name, datastore)
+        datastore.pop("step_data")
 
     return {"status": "You did it!"}

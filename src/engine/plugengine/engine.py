@@ -50,9 +50,9 @@ class PluginEngine:
             plugin.load_method()
 
     @classmethod
-    def invoke(cls, plugin: str) -> Any:
+    def invoke(cls, plugin: str, input_data: Dict[str, Any]) -> Any:
         try:
-            return cls.plugins[plugin].invoke()
+            return cls.plugins[plugin].invoke(input_data)
         except KeyError:
             raise HTTPException(
                 status_code=404, detail=f"The plugin, `{plugin}`, was not found"
