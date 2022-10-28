@@ -63,7 +63,10 @@ class Plugin(BaseModel):
                 raise ImproperRequirementError()
 
     def invoke(self, input_data: Dict[str, Any]) -> None:
-        plugin_input = {key: input_data.get(key) for key in self.dataflow.input}
+        if self.dataflow:
+            plugin_input = {key: input_data.get(key) for key in self.dataflow.input}
+        else:
+            plugin_input = dict()
         if self.function is None:
             raise UnloadedPluginError()
 

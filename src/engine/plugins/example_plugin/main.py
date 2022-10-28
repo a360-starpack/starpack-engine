@@ -1,3 +1,3 @@
 def tester():
     print("We got here!")
-    return True
+    return {"status": "Success"}

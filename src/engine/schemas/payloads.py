@@ -1,7 +1,7 @@
 from pathlib import Path
 from pydantic import BaseModel, Field, Extra
 from typing import Optional, List
-from engine._config import settings
+from .._config import settings
 
 # Generic metadata
 class Metadata(BaseModel):
