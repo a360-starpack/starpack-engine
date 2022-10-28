@@ -15,7 +15,7 @@ CMD ["sh", "serve.sh"]
 # TEST SETUP
 FROM build as test
 COPY ./src/tests ./tests
-COPY .coveragerc .pytest.ini codecov.yml ./
+COPY .coveragerc pytest.ini codecov.yml ./
 RUN pip install -r tests/requirements.txt
 
 

@@ -18,7 +18,7 @@ jobs:
       - name: Generate coverage report
         run: |
           pip install -r requirements.txt
-          pip install -r tests/requirements.txt
+          pip install -r src/tests/requirements.txt
           pytest --cov=./ --cov-report=xml
       - name: Check coverage threshold
         run: |
