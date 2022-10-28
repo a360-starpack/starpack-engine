@@ -1,0 +1,13 @@
+name: fastapi
+module_name: main
+entrypoint: package
+version: 1.0.0
+description: Packages a set of model artifacts with a FastAPI wrapper.
+dataflow:
+  # List of input kwargs
+  input:
+    - artifacts
+    - metadata
+    - custom_input
+  output:
+    - image
