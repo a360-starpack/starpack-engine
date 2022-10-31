@@ -1,1 +1,1 @@
-uvicorn --reload --host 0.0.0.0 --port 1976 engine.asgi:app
+uvicorn --host 0.0.0.0 --port 1976 engine.asgi:app

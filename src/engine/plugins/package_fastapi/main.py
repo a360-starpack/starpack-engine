@@ -1,7 +1,7 @@
 from pathlib import Path
 from string import Template
 import docker
-from engine.schemas.payloads import Artifacts, Metadata, Inference
+from ...schemas.payloads import Artifacts, Metadata, Inference
 from pydantic import BaseModel
 from typing import Optional
 

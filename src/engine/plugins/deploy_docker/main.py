@@ -1,6 +1,6 @@
 import docker
 from typing import Dict, Any
-from engine.schemas.payloads import Metadata
+from ...schemas.payloads import Metadata
 
 def tag_image(image: docker.models.images.Image, metadata: Metadata, step_data: Dict[str, Any]):
 

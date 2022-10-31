@@ -37,7 +37,7 @@ class Plugin(BaseModel):
     function: Optional[Callable]
 
     def load_method(self) -> None:
-        module = import_module(f"engine.plugins.{self.folder}.{self.module_name}")
+        module = import_module(f"...plugins.{self.folder}.{self.module_name}", package=__name__)
         self.function = getattr(module, self.entrypoint)
 
     def install_dependencies(self) -> None:

@@ -8,7 +8,11 @@ def testclient():
     return TestClient(app)
 
 
-def test_hello_world(testclient):
+def test_healthcheck(testclient: TestClient) -> None:
     response = testclient.get("/healthcheck")
     assert response.status_code == 200
     assert response.json() == {"healthy": True}
+
+def test_refresh_plugins(testclient: TestClient) -> None:
+    response = testclient.patch("/plugins")
+    assert response.status_code == 202

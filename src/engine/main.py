@@ -14,9 +14,9 @@ app.include_router(test_plugins.router)
 app.include_router(package.router)
 
 
-@app.patch("/plugins")
+@app.patch("/plugins", status_code=202)
 @app.on_event("startup")
-def initialize_plugins():
+async def initialize_plugins():
     plugin_engine = PluginEngine()
     plugin_engine._discover()
     plugin_engine._load()
