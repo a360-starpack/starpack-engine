@@ -11,13 +11,16 @@ router = APIRouter()
 
 @router.post("/package")
 async def package(starpack_input: StarpackInput):
+    """
+    Takes in a payload dictionary of packaging steps to create a deployment.
+    """
+    if starpack_input.package is None:
+        raise MissingInputError("package")
+
     # Create a plugin engine instance
     engine = PluginEngine()
 
     datastore: Dict[str, Any] = dict()
-
-    if starpack_input.package is None:
-        raise MissingPackageInput()
 
     package_input = starpack_input.package
     datastore["artifacts"] = package_input.artifacts

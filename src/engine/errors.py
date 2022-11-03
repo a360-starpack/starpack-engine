@@ -11,6 +11,8 @@ class UnloadedPluginError(HTTPException):
         super().__init__(status_code=405)
 
 
-class MissingPackageInput(HTTPException):
-    def __init__(self) -> None:
-        super().__init__(status_code=400)
+class MissingInputError(HTTPException):
+    def __init__(self, input_type: str) -> None:
+        super().__init__(
+            status_code=400, detail=f"Missing the following input type: {input_type}"
+        )
