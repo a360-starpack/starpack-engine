@@ -1,10 +1,8 @@
-name: docker_deploy
+name: local_docker_find
 module_name: main
-entrypoint: tag_image
+entrypoint: docker_find
 version: 1.0.0
-description: Packages a set of model artifacts with a FastAPI wrapper.
+description: Finds the model artifacts necessary for
 dataflow:
   input:
-    - image
-    - metadata
     - step_data

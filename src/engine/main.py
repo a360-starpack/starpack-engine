@@ -1,5 +1,5 @@
 import fastapi
-from .routers import test_plugins, package
+from .routers import test_plugins, package, deployment
 from .plugengine import PluginEngine
 from . import __version__
 
@@ -7,11 +7,13 @@ app = fastapi.FastAPI(
     title="Starpack Engine by Andromeda 360",
     description="An extensible engine to package and deploy ML models",
     version=__version__,
+    docs_url="/",
 )
 
 # Add the routes for all specialized routers
 app.include_router(test_plugins.router)
 app.include_router(package.router)
+app.include_router(deployment.router)
 
 
 @app.patch("/plugins", status_code=202)

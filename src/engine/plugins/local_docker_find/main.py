@@ -1,23 +1,14 @@
 import docker
 from typing import Dict, Any
-from ...schemas.payloads import Metadata
 
-def tag_image(image: docker.models.images.Image, metadata: Metadata, step_data: Dict[str, Any]):
 
-    image_name = step_data.get("image_name", metadata.name)
-    image_tags = step_data.get("image_tags")
+def docker_find(step_data: Dict[str, Any]):
+    client = docker.from_env()
 
-    if not image_name:
-        image_name = metadata.name
+    if "image" in step_data:
+        name = step_data["image"].get("name", "")
+        tag = step_data["image"].get("tag", "latest")
 
-    if image_tags:
-        for tag in image_tags:
-            image.tag(image_name, tag)
-    else:
-        image.tag(image_name)
-    
-    return {}
+    image = client.images.get(f"{name}:{tag}")
 
-    
-
-    
+    return {"image": image}
