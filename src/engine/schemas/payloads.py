@@ -46,16 +46,9 @@ class PackageInput(BaseModel):
 
 
 # Deployment schema information
-class DeploymentTarget(BaseModel):
-    type: str
-    environment: Optional[str]
-
-
 class DeployInput(BaseModel):
     metadata: Metadata
-    deployment_target: DeploymentTarget
-    version: Optional[str]
-    model_endpoint: Optional[str]
+    steps: List[Step]
 
 
 # Overall Input Schema

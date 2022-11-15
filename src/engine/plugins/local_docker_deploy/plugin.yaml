@@ -1,0 +1,10 @@
+name: local_docker_deploy
+module_name: main
+entrypoint: docker_deploy
+version: 1.0.0
+description: Packages a set of model artifacts with a FastAPI wrapper.
+dataflow:
+  input:
+    - image
+    - metadata
+    - step_data

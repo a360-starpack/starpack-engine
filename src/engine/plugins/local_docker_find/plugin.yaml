@@ -1,0 +1,8 @@
+name: local_docker_find
+module_name: main
+entrypoint: docker_find
+version: 1.0.0
+description: Finds the model artifacts necessary for
+dataflow:
+  input:
+    - step_data
