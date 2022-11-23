@@ -2,7 +2,10 @@ import docker
 from typing import Dict, Any
 from ...schemas.payloads import Metadata
 
-def tag_image(image: docker.models.images.Image, metadata: Metadata, step_data: Dict[str, Any]):
+
+def tag_image(
+    image: docker.models.images.Image, metadata: Metadata, step_data: Dict[str, Any]
+):
 
     image_name = step_data.get("image_name", metadata.name)
     image_tags = step_data.get("image_tags")
@@ -15,9 +18,5 @@ def tag_image(image: docker.models.images.Image, metadata: Metadata, step_data: 
             image.tag(image_name, tag)
     else:
         image.tag(image_name)
-    
+
     return {}
-
-    
-
-    
