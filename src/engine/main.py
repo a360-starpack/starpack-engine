@@ -3,7 +3,7 @@ from pathlib import Path
 
 import fastapi
 from fastapi.responses import JSONResponse
-from .routers import test_plugins, package, deployment
+from .routers import test_plugins, package, deployment, plugins
 from .plugengine import PluginEngine
 from . import __version__
 
@@ -18,6 +18,7 @@ app = fastapi.FastAPI(
 app.include_router(test_plugins.router)
 app.include_router(package.router)
 app.include_router(deployment.router)
+app.include_router(plugins.router)
 
 
 @app.exception_handler(Exception)
