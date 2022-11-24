@@ -9,5 +9,3 @@ dataflow:
     - artifacts
     - metadata
     - custom_input
-  output:
-    - image

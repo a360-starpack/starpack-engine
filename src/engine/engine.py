@@ -2,15 +2,15 @@ from typing import Any, Dict
 from yaml import load, Loader
 from fastapi import HTTPException
 
-from .._config import settings
-from ..schemas.plugins import Plugin
+from src.engine._config import settings
+from src.engine.schemas.plugins import Plugin
 
 
 class PluginEngine:
     plugins: Dict[str, Plugin] = dict()
 
     @classmethod
-    def _discover(cls):
+    def discover(cls):
         """
         Discover all plugins in our plugin directories.
         """
@@ -40,7 +40,7 @@ class PluginEngine:
             cls.plugins[plugin_data.name] = plugin_data
 
     @classmethod
-    def _load(cls):
+    def load(cls):
         """
         Load all plugins into memory and install requirements.
         """

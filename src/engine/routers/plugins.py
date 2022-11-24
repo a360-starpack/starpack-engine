@@ -1,10 +1,9 @@
-from typing import List
-from fastapi import APIRouter
+from typing import List, Dict
+from fastapi import APIRouter, Body
 
-from ..plugengine.engine import PluginEngine
+from ..engine import PluginEngine
 
-from ..schemas.plugins import PluginOut, Plugin
-from ..errors import *
+from ..schemas.plugins import PluginOut
 
 router = APIRouter(tags=["plugins"])
 
@@ -17,3 +16,9 @@ async def get_plugins():
 
     return list(PluginEngine.plugins.values())
 
+
+@router.post("/plugins/test/{plugin_name}")
+async def plugin_tester(plugin_name: str, args: Dict = Body()):
+    engine = PluginEngine()
+    engine.invoke(plugin_name, args)
+    return args
