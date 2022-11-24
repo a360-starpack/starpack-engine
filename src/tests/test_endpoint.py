@@ -28,37 +28,21 @@ def test_example_plugin(testclient: TestClient) -> None:
 
 fake_input = {
     "package": {
-        "metadata": {
-            "name": "test",
-            "version": "test"
-        },
+        "metadata": {"name": "test", "version": "test"},
         "artifacts": {
-                "root_location": "test",
-                "inference": {
-                    "function_name": "test",
-                    "script_name": "test"
-                }
-            },
-        "steps": [
-            {"name": "example_plugin"}
-        ]
+            "root_location": "test",
+            "inference": {"function_name": "test", "script_name": "test"},
+        },
+        "steps": [{"name": "example_plugin"}],
     },
     "deployment": {
-            "metadata": {
-                "name": "test",
-                "version": "test"
-            },
-            "artifacts": {
-                "root_location": "test",
-                "inference": {
-                    "function_name": "test",
-                    "script_name": "test"
-                }
-            },
-            "steps": [
-                {"name": "example_plugin"}
-            ]
-        }
+        "metadata": {"name": "test", "version": "test"},
+        "artifacts": {
+            "root_location": "test",
+            "inference": {"function_name": "test", "script_name": "test"},
+        },
+        "steps": [{"name": "example_plugin"}],
+    },
 }
 
 

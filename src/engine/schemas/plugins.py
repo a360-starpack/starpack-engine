@@ -36,7 +36,6 @@ class PluginOut(BaseModel):
     dependencies: Optional[List[Dependency]]
 
 
-
 class Plugin(BaseModel):
     name: str
     version: str
