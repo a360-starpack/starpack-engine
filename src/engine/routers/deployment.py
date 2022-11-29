@@ -18,6 +18,10 @@ async def deploy(starpack_input: StarpackInput):
 
     datastore: Dict[str, Any] = dict()
 
+    # Add metadata about packaging if we have it
+    if starpack_input.package:
+        datastore["package_metadata"] = starpack_input.package.metadata
+
     deployment_input = starpack_input.deployment
     datastore["metadata"] = deployment_input.metadata
 

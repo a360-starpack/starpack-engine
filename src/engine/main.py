@@ -38,7 +38,7 @@ async def debug_exception_handler(request: fastapi.Request, exc: Exception):
     )
 
 
-@app.patch("/plugins", status_code=202)
+@app.patch("/plugins", status_code=202, tags=["plugins"])
 @app.on_event("startup")
 async def initialize_plugins():
     plugin_engine = PluginEngine()
