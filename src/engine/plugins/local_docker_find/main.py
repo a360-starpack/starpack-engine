@@ -10,7 +10,7 @@ def docker_find(step_data: Dict[str, Any], package_metadata: Optional[Metadata] 
     # Try to grab the name and tag from the metadata
     name = ""
     tag = "latest"
-    if step_data["image"] is not None:
+    if step_data.get("image"):
         name = step_data["image"].get("name", "")
         tag = step_data["image"].get("tag", "latest")
 
@@ -18,7 +18,7 @@ def docker_find(step_data: Dict[str, Any], package_metadata: Optional[Metadata] 
         tag = "latest"
 
     # if they didn't provide a name, we'll grab one from the package metadata we got
-    if not name:
+    if not name and package_metadata:
         name = package_metadata.name
 
     # If we still don't have it, let's raise an exception
