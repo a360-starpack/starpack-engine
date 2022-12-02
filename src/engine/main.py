@@ -3,8 +3,8 @@ from pathlib import Path
 
 import fastapi
 from fastapi.responses import JSONResponse
-from .routers import test_plugins, package, deployment
-from .plugengine import PluginEngine
+from .routers import package, deployment, plugins
+from .engine import PluginEngine
 from . import __version__
 
 app = fastapi.FastAPI(
@@ -15,9 +15,9 @@ app = fastapi.FastAPI(
 )
 
 # Add the routes for all specialized routers
-app.include_router(test_plugins.router)
 app.include_router(package.router)
 app.include_router(deployment.router)
+app.include_router(plugins.router)
 
 
 @app.exception_handler(Exception)
@@ -38,12 +38,12 @@ async def debug_exception_handler(request: fastapi.Request, exc: Exception):
     )
 
 
-@app.patch("/plugins", status_code=202)
+@app.patch("/plugins", status_code=202, tags=["plugins"])
 @app.on_event("startup")
 async def initialize_plugins():
     plugin_engine = PluginEngine()
-    plugin_engine._discover()
-    plugin_engine._load()
+    plugin_engine.discover()
+    plugin_engine.load()
 
 
 @app.get("/healthcheck")

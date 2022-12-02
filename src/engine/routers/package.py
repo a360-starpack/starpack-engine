@@ -1,7 +1,7 @@
 from typing import Any, Dict
 from fastapi import APIRouter
 
-from ..plugengine.engine import PluginEngine
+from ..engine import PluginEngine
 
 from ..schemas.payloads import StarpackInput
 from ..errors import *

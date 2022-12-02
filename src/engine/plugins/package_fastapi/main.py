@@ -56,7 +56,6 @@ def package(artifacts: Artifacts, metadata: Metadata, custom_input: str = ""):
 
     image = client.images.build(
         path=str(artifacts_location),
-        pull=True,
         labels={"app": "starpack-model", "model-name": metadata.name},
         tag=metadata.name,
     )

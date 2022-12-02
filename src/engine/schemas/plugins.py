@@ -25,6 +25,17 @@ class DataFlow(BaseModel):
     output: Optional[List[str]]
 
 
+class PluginOut(BaseModel):
+    name: str
+    version: str
+    description: Optional[str]
+    folder: str
+    module_name: str
+    entrypoint: str
+    dataflow: Optional[DataFlow]
+    dependencies: Optional[List[Dependency]]
+
+
 class Plugin(BaseModel):
     name: str
     version: str

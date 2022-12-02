@@ -1,7 +1,7 @@
 from typing import Any, Dict
 from fastapi import APIRouter
 
-from ..plugengine.engine import PluginEngine
+from ..engine import PluginEngine
 
 from ..schemas.payloads import StarpackInput
 from ..errors import *
@@ -17,6 +17,10 @@ async def deploy(starpack_input: StarpackInput):
         raise MissingInputError("deployment")
 
     datastore: Dict[str, Any] = dict()
+
+    # Add metadata about packaging if we have it
+    if starpack_input.package:
+        datastore["package_metadata"] = starpack_input.package.metadata
 
     deployment_input = starpack_input.deployment
     datastore["metadata"] = deployment_input.metadata
