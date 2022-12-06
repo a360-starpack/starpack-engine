@@ -1,5 +1,5 @@
-import docker
 import pytest
+import docker
 from fastapi import HTTPException
 
 from src.engine.plugins.local_docker_find.docker_find import docker_find
