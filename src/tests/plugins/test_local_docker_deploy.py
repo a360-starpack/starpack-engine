@@ -11,7 +11,11 @@ from src.engine.schemas.payloads import Metadata
 
 
 def test_docker_format_filter():
-    test_dict = {"okay": "yeah", "this": "is_cool", "final": "pair"}
+    test_dict = {
+        "okay": "yeah",
+        "this": "is_cool",
+        "final": "pair"
+    }
 
     output = ["okay=yeah", "this=is_cool", "final=pair"]
 
