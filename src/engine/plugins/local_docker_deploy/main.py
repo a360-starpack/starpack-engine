@@ -1,3 +1,4 @@
+import docker
 from typing import Dict, Any
 import socket
 
