@@ -31,4 +31,5 @@ async def deploy(starpack_input: StarpackInput):
         engine.invoke(step.name, datastore)
         datastore.pop("step_data")
 
-    return {"status": "You did it!"}
+    # If we have it, return the endpoint. Otherwise, just give it a null value.
+    return {"endpoint": datastore.get("endpoint")}
