@@ -1,8 +1,8 @@
 from typing import List, Dict
+
 from fastapi import APIRouter, Body
 
 from ..engine import PluginEngine
-
 from ..schemas.plugins import PluginOut
 
 router = APIRouter(tags=["plugins"])
