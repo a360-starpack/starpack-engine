@@ -1,9 +1,10 @@
 from typing import Any, Dict
-from yaml import load, Loader
-from fastapi import HTTPException
 
-from src.engine._config import settings
-from src.engine.schemas.plugins import Plugin
+from fastapi import HTTPException
+from yaml import load, Loader
+
+from ._config import settings
+from .schemas.plugins import Plugin
 
 
 class PluginEngine:

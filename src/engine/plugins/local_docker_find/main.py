@@ -1,7 +1,9 @@
-import docker
 from typing import Dict, Any, Optional
-from ...schemas.payloads import Metadata
+
+import docker
 from fastapi import HTTPException
+
+from ...schemas.payloads import Metadata
 
 
 def docker_find(step_data: Dict[str, Any], package_metadata: Optional[Metadata] = None):

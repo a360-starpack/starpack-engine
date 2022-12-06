@@ -3,9 +3,10 @@ from pathlib import Path
 
 import fastapi
 from fastapi.responses import JSONResponse
-from .routers import package, deployment, plugins
-from .engine import PluginEngine
+
 from . import __version__
+from .engine import PluginEngine
+from .routers import package, deployment, plugins
 
 app = fastapi.FastAPI(
     title="Starpack Engine by Andromeda 360",

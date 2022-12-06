@@ -1,9 +1,11 @@
-import sys
-from pydantic import BaseModel, Field
-from typing import Any, Dict, Optional, List, Callable
 import subprocess
-from ..errors import *
+import sys
 from importlib import import_module
+from typing import Any, Dict, Optional, List, Callable
+
+from pydantic import BaseModel
+
+from ..errors import *
 
 
 class Dependency(BaseModel):

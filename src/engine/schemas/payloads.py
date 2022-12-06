@@ -1,7 +1,10 @@
 from pathlib import Path
-from pydantic import BaseModel, Field, Extra
 from typing import Optional, List
+
+from pydantic import BaseModel, Extra
+
 from .._config import settings
+
 
 # Generic metadata
 class Metadata(BaseModel):

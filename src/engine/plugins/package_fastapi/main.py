@@ -1,9 +1,11 @@
 from pathlib import Path
 from string import Template
-import docker
-from ...schemas.payloads import Artifacts, Metadata, Inference
-from pydantic import BaseModel
 from typing import Optional
+
+import docker
+from pydantic import BaseModel
+
+from ...schemas.payloads import Artifacts, Metadata, Inference
 
 
 class WrapperYAML(BaseModel):
@@ -15,7 +17,6 @@ class WrapperYAML(BaseModel):
 
 
 def package(artifacts: Artifacts, metadata: Metadata, custom_input: str = ""):
-
     # Write the YAML information to the package
     artifacts_location = artifacts.root_filepath
 
