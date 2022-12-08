@@ -25,6 +25,7 @@ async def package(starpack_input: StarpackInput):
     package_input = starpack_input.package
     datastore["artifacts"] = package_input.artifacts
     datastore["metadata"] = package_input.metadata
+    datastore["images"] = dict()
 
     for step in package_input.steps:
         print(f"Running {step.name}")

@@ -24,6 +24,7 @@ async def deploy(starpack_input: StarpackInput):
 
     deployment_input = starpack_input.deployment
     datastore["metadata"] = deployment_input.metadata
+    datastore["images"] = dict()
 
     for step in deployment_input.steps:
         print(f"Running {step.name}")
@@ -32,4 +33,4 @@ async def deploy(starpack_input: StarpackInput):
         datastore.pop("step_data")
 
     # If we have it, return the endpoint. Otherwise, just give it a null value.
-    return {"endpoint": datastore.get("endpoint")}
+    return {"endpoints": datastore.get("endpoints")}

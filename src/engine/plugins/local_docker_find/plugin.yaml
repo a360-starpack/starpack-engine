@@ -1,5 +1,5 @@
 name: local_docker_find
-module_name: main
+module_name: docker_find
 entrypoint: docker_find
 version: 1.0.0
 description: Finds the model artifacts necessary for
@@ -7,5 +7,6 @@ dataflow:
   input:
     - step_data
     - package_metadata
+    - images
   output:
-    - image
+    - images

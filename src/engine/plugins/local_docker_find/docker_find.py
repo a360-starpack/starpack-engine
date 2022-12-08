@@ -6,8 +6,16 @@ from fastapi import HTTPException
 from ...schemas.payloads import Metadata
 
 
-def docker_find(step_data: Dict[str, Any], package_metadata: Optional[Metadata] = None):
+def docker_find(
+    images: Dict[str, docker.models.images.Image],
+    step_data: Dict[str, Any],
+    package_metadata: Optional[Metadata] = None,
+):
     client = docker.from_env()
+
+    # Try to see if the package name/type is given and default to FastAPI
+    # Since we support multiple package types, we look for the package name and default
+    wrapper_type = step_data.get("wrapper", "fastapi")
 
     # Try to grab the name and tag from the metadata
     name = ""
@@ -40,4 +48,6 @@ def docker_find(step_data: Dict[str, Any], package_metadata: Optional[Metadata] 
             f"Please package your model and try again.",
         )
 
-    return {"image": image}
+    images[wrapper_type] = image
+
+    return images

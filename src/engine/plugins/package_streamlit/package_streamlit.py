@@ -1,6 +1,6 @@
 from pathlib import Path
 from string import Template
-from typing import Optional
+from typing import Optional, Dict
 
 import docker
 from pydantic import BaseModel
@@ -16,7 +16,12 @@ class WrapperYAML(BaseModel):
     inference: Inference
 
 
-def package(artifacts: Artifacts, metadata: Metadata, custom_input: str = ""):
+def package(
+    images: Dict[str, docker.models.images.Image],
+    artifacts: Artifacts,
+    metadata: Metadata,
+    custom_input: str = "",
+):
     # Write the YAML information to the package
     artifacts_location = artifacts.root_filepath
 
@@ -35,13 +40,13 @@ def package(artifacts: Artifacts, metadata: Metadata, custom_input: str = ""):
     dockerfile_template_mapping = {
         "dependency_install": "",
         "custom_input": custom_input if custom_input else "",
-        "name": metadata.name,
+        "streamlit_script": artifacts.streamlit,
     }
 
     if artifacts.dependencies:
         dockerfile_template_mapping[
             "dependency_install"
-        ] = f"RUN pip install -r /app/models/{metadata.name}/{artifacts.dependencies}"
+        ] = f"RUN pip install -r /app/{artifacts.dependencies}"
 
     dockerfile_template = Path(__file__).parent / "templates" / "template.Dockerfile"
 
@@ -58,7 +63,9 @@ def package(artifacts: Artifacts, metadata: Metadata, custom_input: str = ""):
     image = client.images.build(
         path=str(artifacts_location),
         labels={"app": "starpack-model", "model-name": metadata.name},
-        tag=metadata.name,
+        tag=f"{metadata.name}-streamlit",
     )
 
-    return {"image": image[0]}
+    images["streamlit"] = image[0]
+
+    return images

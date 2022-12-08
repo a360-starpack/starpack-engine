@@ -28,6 +28,7 @@ class Artifacts(BaseModel):
     training_data: Optional[str]
     inference: Inference
     dependencies: Optional[str]
+    streamlit: Optional[str]
 
     @property
     def root_filepath(self) -> Path:
