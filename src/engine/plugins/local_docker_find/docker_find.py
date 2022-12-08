@@ -16,15 +16,19 @@ def docker_find(
     # Try to see if the package name/type is given and default to FastAPI
     # Since we support multiple package types, we look for the package name and default
     wrapper_type = step_data.get("wrapper", "fastapi")
+    print(step_data)
+
 
     # Try to grab the name and tag from the metadata
     name = ""
-    tag = "latest"
+    tag = ""
     if step_data.get("image"):
-        name = step_data["image"].get("name", "")
-        tag = step_data["image"].get("tag", "latest")
+        name = step_data["image"].get("name")
+        tag = step_data["image"].get("tag")
 
-    if not tag:
+    if not tag and package_metadata:
+        tag = package_metadata.version
+    elif not tag:
         tag = "latest"
 
     # if they didn't provide a name, we'll grab one from the package metadata we got
@@ -39,13 +43,15 @@ def docker_find(
             "Please specify an image name in the `local_docker_find` step or "
             "include the package information that goes with this request.",
         )
+
+    image_name = f"{name}-{wrapper_type}:{tag}"
+
     try:
-        image = client.images.get(f"{name}:{tag}")
+        image = client.images.get(image_name)
     except docker.errors.ImageNotFound:
         raise HTTPException(
             status_code=404,
-            detail=f"Unable to find the package, '{name}:{tag}'. "
-            f"Please package your model and try again.",
+            detail=f"Unable to find the package, '{image_name}'. Please package your model and try again.",
         )
 
     images[wrapper_type] = image

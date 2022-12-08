@@ -44,7 +44,7 @@ def create_wrapper_container(
     except KeyError:
         raise HTTPException(
             status_code=400,
-            detail=f"Unable to deploy wrapper {wrapper}. Please add the `package` field to `docker_desktop_push` "
+            detail=f"Unable to deploy wrapper {wrapper}. Please add the `package` field to `local_docker_deploy` "
             "step and ensure that it points to the proper package type.",
         )
 
