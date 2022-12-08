@@ -17,6 +17,7 @@ def find_free_port() -> int:
 def delete_duplicate_containers(
     client: docker.APIClient, label_filter: Dict[str, Any]
 ) -> None:
+
     docker_formatted_filter = docker_format_filter(label_filter)
 
     matching_deployments = client.containers.list(
