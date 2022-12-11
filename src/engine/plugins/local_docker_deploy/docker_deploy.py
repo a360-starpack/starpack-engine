@@ -44,7 +44,7 @@ def create_wrapper_container(
     except KeyError:
         raise HTTPException(
             status_code=400,
-            detail=f"Unable to deploy wrapper {wrapper}. Please add the `package` field to `local_docker_deploy` "
+            detail=f"Unable to deploy wrapper {wrapper}. Please add the `wrapper` field to `local_docker_deploy` "
             "step and ensure that it points to the proper package type.",
         )
 
@@ -91,10 +91,11 @@ def docker_deploy(
     wrappers = step_data.get("wrapper")
 
     if not wrappers:
-        wrappers = [{"name": "fastapi", "port": port}]
-    elif len(images) == 1:
-        # If we only have one image, we can assume it's that image type
-        wrappers = [{"name": list(step_data.keys())[0], "port": port}]
+        if len(images) == 1:
+            wrappers = [{"name": list(images.keys())[0], "port": port}]
+        else:
+            wrappers = [{"name": "fastapi", "port": port}]
+
 
     endpoints = dict()
     for wrapper_type in wrappers:
