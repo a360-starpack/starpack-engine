@@ -1,8 +1,8 @@
-import docker
 import pytest
+import docker
 from fastapi import HTTPException
 
-from src.engine.plugins.local_docker_find.main import docker_find
+from src.engine.plugins.local_docker_find.docker_find import docker_find
 from src.engine.schemas.payloads import Metadata
 
 
@@ -72,15 +72,17 @@ def test_docker_find_default():
     name = "test-name"
     tag = "test-tag"
     step_data = {"image": {"name": name, "tag": tag}}
-    output = docker_find(step_data)
+    images = dict()
+    output = docker_find(images, step_data)
 
-    assert output == {"image": f"{name}:{tag}"}
+    assert output == {"fastapi": f"{name}-fastapi:{tag}"}
 
 
 def test_docker_find_empty():
     step_data = dict()
+    images = dict()
     with pytest.raises(HTTPException) as e:
-        docker_find(step_data)
+        docker_find(images, step_data)
 
     assert e.value.status_code == 400
 
@@ -89,9 +91,10 @@ def test_docker_find_no_tag():
     name = "test-name"
     tag = None
     step_data = {"image": {"name": name, "tag": tag}}
-    output = docker_find(step_data)
+    images = dict()
+    output = docker_find(images, step_data)
 
-    assert output == {"image": f"{name}:latest"}
+    assert output == {"fastapi": f"{name}-fastapi:latest"}
 
 
 def test_docker_find_no_image(monkeypatch):
@@ -102,8 +105,9 @@ def test_docker_find_no_image(monkeypatch):
     name = "test-name"
     tag = "test-tag"
     step_data = {"image": {"name": name, "tag": tag}}
+    images = dict()
     with pytest.raises(HTTPException) as e:
-        docker_find(step_data)
+        docker_find(images, step_data)
 
     assert e.value.status_code == 404
 
@@ -111,7 +115,8 @@ def test_docker_find_no_image(monkeypatch):
 def test_docker_find_with_package_metadata():
     name = "test-name"
     step_data = dict()
+    images = dict()
     metadata = Metadata(name=name)
-    output = docker_find(step_data, metadata)
+    output = docker_find(images, step_data, metadata)
 
-    assert output == {"image": f"{name}:latest"}
+    assert output == {"fastapi": f"{name}-fastapi:latest"}

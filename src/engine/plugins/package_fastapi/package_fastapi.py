@@ -1,6 +1,6 @@
 from pathlib import Path
 from string import Template
-from typing import Optional
+from typing import Optional, Dict
 
 import docker
 from pydantic import BaseModel
@@ -16,7 +16,12 @@ class WrapperYAML(BaseModel):
     inference: Inference
 
 
-def package(artifacts: Artifacts, metadata: Metadata, custom_input: str = ""):
+def package(
+    images: Dict[str, docker.models.images.Image],
+    artifacts: Artifacts,
+    metadata: Metadata,
+    custom_input: str = "",
+):
     # Write the YAML information to the package
     artifacts_location = artifacts.root_filepath
 
@@ -57,8 +62,14 @@ def package(artifacts: Artifacts, metadata: Metadata, custom_input: str = ""):
 
     image = client.images.build(
         path=str(artifacts_location),
-        labels={"app": "starpack-model", "model-name": metadata.name},
-        tag=metadata.name,
+        labels={
+            "app": "starpack-model",
+            "model-name": metadata.name,
+            "version": metadata.version,
+        },
+        tag=f"{metadata.name}-fastapi:{metadata.version}",
     )
 
-    return {"image": image[0]}
+    images["fastapi"] = image[0]
+
+    return images

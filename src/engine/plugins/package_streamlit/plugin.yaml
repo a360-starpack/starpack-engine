@@ -1,5 +1,5 @@
-name: fastapi
-module_name: package_fastapi
+name: streamlit
+module_name: package_streamlit
 entrypoint: package
 version: 1.0.0
 description: Packages a set of model artifacts with a FastAPI wrapper.
