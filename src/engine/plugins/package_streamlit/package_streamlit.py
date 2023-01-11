@@ -68,6 +68,8 @@ def package(
             "version": metadata.version,
         },
         tag=f"{metadata.name}-streamlit:{metadata.version}",
+        rm=True,
+        forcerm=True,
     )
 
     images["streamlit"] = image[0]
