@@ -62,7 +62,11 @@ def package(
 
     image = client.images.build(
         path=str(artifacts_location),
-        labels={"app": "starpack-model", "model-name": metadata.name, "version": metadata.version},
+        labels={
+            "app": "starpack-model",
+            "model-name": metadata.name,
+            "version": metadata.version,
+        },
         tag=f"{metadata.name}-fastapi:{metadata.version}",
     )
 

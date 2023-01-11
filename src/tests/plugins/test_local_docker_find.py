@@ -75,7 +75,7 @@ def test_docker_find_default():
     images = dict()
     output = docker_find(images, step_data)
 
-    assert output == {"fastapi": f"{name}:{tag}"}
+    assert output == {"fastapi": f"{name}-fastapi:{tag}"}
 
 
 def test_docker_find_empty():
@@ -94,7 +94,7 @@ def test_docker_find_no_tag():
     images = dict()
     output = docker_find(images, step_data)
 
-    assert output == {"fastapi": f"{name}:latest"}
+    assert output == {"fastapi": f"{name}-fastapi:latest"}
 
 
 def test_docker_find_no_image(monkeypatch):
@@ -119,4 +119,4 @@ def test_docker_find_with_package_metadata():
     metadata = Metadata(name=name)
     output = docker_find(images, step_data, metadata)
 
-    assert output == {"fastapi": f"{name}:latest"}
+    assert output == {"fastapi": f"{name}-fastapi:latest"}

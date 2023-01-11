@@ -16,17 +16,15 @@ def docker_find(
     # Try to see if the package name/type is given and default to FastAPI
     # Since we support multiple package types, we look for the package name and default
     wrapper_type = step_data.get("wrapper", "fastapi")
-    print(step_data)
-
 
     # Try to grab the name and tag from the metadata
     name = ""
     tag = ""
     if step_data.get("image"):
-        name = step_data["image"].get("name")
-        tag = step_data["image"].get("tag")
+        name = step_data["image"].get("name", "")
+        tag = step_data["image"].get("tag", "")
 
-    if not tag and package_metadata:
+    if not tag and package_metadata and package_metadata.version:
         tag = package_metadata.version
     elif not tag:
         tag = "latest"

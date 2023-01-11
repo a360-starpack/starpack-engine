@@ -8,7 +8,7 @@ from ...schemas.payloads import Metadata
 
 def find_free_port() -> int:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.bind(('localhost', 0))
+        sock.bind(("localhost", 0))
         port = sock.getsockname()[1]
 
     return port
@@ -17,7 +17,6 @@ def find_free_port() -> int:
 def delete_duplicate_containers(
     client: docker.APIClient, label_filter: Dict[str, Any]
 ) -> None:
-
     docker_formatted_filter = docker_format_filter(label_filter)
 
     matching_deployments = client.containers.list(
@@ -72,8 +71,11 @@ def create_wrapper_container(
             labels=labels,
         )
     except docker.errors.APIError:
-        raise HTTPException(400, detail=f"The port, {port}, was already in use and unable to be allocated. "
-                                        f"Please remove your port information and one will be automatically allocated.")
+        raise HTTPException(
+            400,
+            detail=f"The port, {port}, was already in use and unable to be allocated. "
+            f"Please remove your port information and one will be automatically allocated.",
+        )
     return {wrapper: f"http://localhost:{port}"}
 
 
@@ -95,7 +97,6 @@ def docker_deploy(
             wrappers = [{"name": list(images.keys())[0], "port": port}]
         else:
             wrappers = [{"name": "fastapi", "port": port}]
-
 
     endpoints = dict()
     for wrapper_type in wrappers:
