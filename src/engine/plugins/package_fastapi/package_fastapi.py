@@ -68,6 +68,8 @@ def package(
             "version": metadata.version,
         },
         tag=f"{metadata.name}-fastapi:{metadata.version}",
+        rm=True,
+        forcerm=True,
     )
 
     images["fastapi"] = image[0]
