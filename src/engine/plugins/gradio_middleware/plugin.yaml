@@ -1,0 +1,10 @@
+name: gradio_middleware
+module_name: gradio_middleware
+version: 1.0.0
+description: Middleware injector to have a Gradio app mounted inside our FastAPI inference container.
+entrypoint: inject_gradio
+dataflow:
+  input:
+    - metadata
+    - artifacts
+    - custom_input

@@ -29,6 +29,8 @@ class Artifacts(BaseModel):
     inference: Inference
     dependencies: Optional[str]
     streamlit: Optional[str]
+    gradio_script_name: Optional[str]
+    gradio_interface_name: Optional[str]
 
     @property
     def root_filepath(self) -> Path:

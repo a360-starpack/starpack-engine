@@ -2,7 +2,7 @@ name: local_docker_deploy
 module_name: docker_deploy
 entrypoint: docker_deploy
 version: 1.0.0
-description: Packages a set of model artifacts with a FastAPI wrapper.
+description: Deploys a packaged Starpack model with a given wrapper to the local Docker environment
 dataflow:
   input:
     - images

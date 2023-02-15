@@ -2,7 +2,7 @@ name: docker_desktop_push
 module_name: docker_push
 entrypoint: tag_image
 version: 1.0.0
-description: Packages a set of model artifacts with a FastAPI wrapper.
+description: Tags an image and stores it in the local Docker repository.
 dataflow:
   input:
     - images
