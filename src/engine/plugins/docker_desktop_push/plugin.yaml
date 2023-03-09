@@ -1,4 +1,5 @@
 name: docker_desktop_push
+type: basic
 module_name: docker_push
 entrypoint: tag_image
 version: 1.0.0

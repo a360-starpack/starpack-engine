@@ -1,4 +1,5 @@
 name: local_docker_find
+type: basic
 module_name: docker_find
 entrypoint: docker_find
 version: 1.0.0

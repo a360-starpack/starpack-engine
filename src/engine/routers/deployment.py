@@ -9,8 +9,8 @@ from ..schemas.payloads import StarpackInput
 router = APIRouter()
 
 
-@router.post("/deploy")
-async def deploy(starpack_input: StarpackInput):
+@router.post("/deployment")
+async def create_deployment(starpack_input: StarpackInput):
     engine = PluginEngine()
 
     if starpack_input.deployment is None:
@@ -34,3 +34,12 @@ async def deploy(starpack_input: StarpackInput):
 
     # If we have it, return the endpoint. Otherwise, just give it a null value.
     return {"endpoints": datastore.get("endpoints")}
+
+
+@router.get("/deployment")
+def get_deployments():
+    engine = PluginEngine()
+
+    ...
+
+

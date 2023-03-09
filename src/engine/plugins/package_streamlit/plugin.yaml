@@ -1,4 +1,5 @@
 name: streamlit
+type: basic
 module_name: package_streamlit
 entrypoint: package
 version: 1.0.0

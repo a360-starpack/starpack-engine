@@ -1,4 +1,5 @@
 name: fastapi
+type: basic
 module_name: package_fastapi
 entrypoint: package
 version: 1.0.0

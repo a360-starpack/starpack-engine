@@ -1,4 +1,5 @@
 name: local_docker_deploy
+type: basic
 module_name: docker_deploy
 entrypoint: docker_deploy
 version: 1.0.0
