@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.post("/deployment")
-async def create_deployment(starpack_input: StarpackInput):
+def create_deployment(starpack_input: StarpackInput):
     engine = PluginEngine()
 
     if starpack_input.deployment is None:

@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.post("/package")
-async def create_package(starpack_input: StarpackInput):
+def create_package(starpack_input: StarpackInput):
     """
     Takes in a payload dictionary of packaging steps to create a deployment.
     """
