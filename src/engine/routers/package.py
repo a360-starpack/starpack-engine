@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from fastapi import APIRouter
 
@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.post("/package")
-async def package(starpack_input: StarpackInput):
+async def create_package(starpack_input: StarpackInput):
     """
     Takes in a payload dictionary of packaging steps to create a deployment.
     """
@@ -36,3 +36,40 @@ async def package(starpack_input: StarpackInput):
     return {"status": "You did it!"}
 
 
+@router.get("/package")
+def get_packages(
+    name: Optional[str] = None,
+    version: Optional[str] = None,
+    wrapper: Optional[str] = None,
+):
+    engine = PluginEngine()
+
+    output = engine.invoke(
+        plugin="docker_manage_packages",
+        input_data={"name": name, "version": version, "wrapper": wrapper},
+        method="list",
+    )
+
+    if not output:
+        raise HTTPException(
+            404, detail="Unable to find any packages matching the given parameters."
+        )
+
+    return output
+
+
+@router.delete("/package")
+def delete_packages(
+    name: str,
+    version: Optional[str] = None,
+    wrapper: Optional[str] = None,
+):
+    engine = PluginEngine()
+
+    output = engine.invoke(
+        plugin="docker_manage_packages",
+        input_data={"name": name, "version": version, "wrapper": wrapper},
+        method="delete",
+    )
+
+    return output

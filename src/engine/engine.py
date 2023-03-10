@@ -4,7 +4,12 @@ from typing import Any, Dict, Callable, Optional
 from yaml import safe_load
 
 from ._config import settings
-from .schemas.plugins import PluginData, PluginModel, BasicPluginModel, ManagementPluginModel
+from .schemas.plugins import (
+    PluginData,
+    PluginModel,
+    BasicPluginModel,
+    ManagementPluginModel,
+)
 
 import subprocess
 import sys
@@ -56,7 +61,9 @@ class BasicPlugin(Plugin):
 
     def invoke(self, input_data: Dict[str, Any], **kwargs) -> Dict[str, Any]:
         if self.data.dataflow:
-            plugin_input = {key: input_data.get(key) for key in self.data.dataflow.input}
+            plugin_input = {
+                key: input_data.get(key) for key in self.data.dataflow.input
+            }
         else:
             plugin_input = dict()
         if self.function is None:
@@ -83,14 +90,17 @@ class ManagementPlugin(Plugin):
         method = kwargs.get("method")
 
         if not method:
-            raise HTTPException(500, detail=f"A management-style plugin was invoke without a method to reference.")
+            raise HTTPException(
+                500,
+                detail=f"A management-style plugin was invoke without a method to reference.",
+            )
 
-        function = getattr(self.module, self.data.entrypoint[method])
+        function = getattr(self.module, self.data.entrypoint.__dict__[method])
 
         if function is None:
             raise UnloadedPluginError()
 
-        output = function(**kwargs)
+        output = function(**input_data)
 
         return output
 
@@ -145,7 +155,9 @@ class PluginEngine:
             plugin.install_dependencies()
 
     @classmethod
-    def invoke(cls, plugin: str, input_data: Dict[str, Any], method: Optional[str] = None) -> Any:
+    def invoke(
+        cls, plugin: str, input_data: Dict[str, Any], method: Optional[str] = None
+    ) -> Any:
         try:
             return cls.plugins[plugin].invoke(input_data, method=method)
         except KeyError:

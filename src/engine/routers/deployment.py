@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from fastapi import APIRouter
 
@@ -37,9 +37,61 @@ async def create_deployment(starpack_input: StarpackInput):
 
 
 @router.get("/deployment")
-def get_deployments():
+def get_deployments(
+    name: Optional[str] = None,
+    version: Optional[str] = None,
+    wrapper: Optional[str] = None,
+):
     engine = PluginEngine()
 
-    ...
+    output = engine.invoke(
+        plugin="docker_manage_deployments",
+        input_data={"name": name, "version": version, "wrapper": wrapper},
+        method="list",
+    )
+
+    if not output:
+        raise HTTPException(
+            404, detail="Unable to find any deployments matching the given parameters."
+        )
+
+    return output
 
 
+@router.delete("/deployment")
+def delete_deployments(
+    name: Optional[str] = None,
+    version: Optional[str] = None,
+    wrapper: Optional[str] = None,
+):
+    engine = PluginEngine()
+
+    output = engine.invoke(
+        plugin="docker_manage_deployments",
+        input_data={"name": name, "version": version, "wrapper": wrapper},
+        method="delete",
+    )
+
+    return output
+
+
+@router.get("/logs")
+def get_deployments(
+    name: Optional[str] = None,
+    version: Optional[str] = None,
+    wrapper: Optional[str] = None,
+):
+    engine = PluginEngine()
+
+    output = engine.invoke(
+        plugin="docker_manage_deployments",
+        input_data={"name": name, "version": version, "wrapper": wrapper},
+        method="logs",
+    )
+
+    if not output:
+        raise HTTPException(
+            404, detail="Unable to find any deployments matching the given parameters."
+        )
+
+    return output

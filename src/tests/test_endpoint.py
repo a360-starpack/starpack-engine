@@ -48,7 +48,7 @@ fake_input = {
 
 
 def test_deploy_endpoint(test_client: TestClient) -> None:
-    response = test_client.post("/deploy", json=fake_input)
+    response = test_client.post("/deployment", json=fake_input)
 
     print(response.content)
     assert response.status_code == 200

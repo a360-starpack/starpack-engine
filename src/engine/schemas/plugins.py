@@ -1,11 +1,9 @@
-
 from typing import Dict, Optional, List, Union, Literal
 from enum import Enum
 
 from pydantic import BaseModel, Field
 
 from typing_extensions import Annotated
-
 
 
 class PluginType(str, Enum):
@@ -45,7 +43,6 @@ class PluginOut(BaseModel):
     dependencies: Optional[List[Dependency]]
 
 
-
 class PluginModel(BaseModel):
     name: str
     type: PluginType
@@ -64,10 +61,9 @@ class BasicPluginModel(PluginModel):
 
 
 class ManagementEntrypoint(BaseModel):
-    read: str
     list: str
     delete: str
-    logs: str
+    logs: Optional[str]
 
 
 class ManagementPluginModel(PluginModel):
@@ -76,6 +72,6 @@ class ManagementPluginModel(PluginModel):
 
 
 class PluginData(BaseModel):
-    __root__: Annotated[Union[BasicPluginModel, ManagementPluginModel], Field(discriminator='type')]
-
-
+    __root__: Annotated[
+        Union[BasicPluginModel, ManagementPluginModel], Field(discriminator="type")
+    ]

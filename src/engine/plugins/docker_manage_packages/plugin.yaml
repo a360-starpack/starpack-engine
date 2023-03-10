@@ -1,0 +1,18 @@
+name: docker_manage_packages
+type: manage
+module_name: docker_manage
+entrypoint:
+  list: list_docker_package
+  delete: delete_docker_package
+version: 1.0.0
+description: Exposes locally packaged Starpack resources in Docker to management operations.
+dataflow:
+  input:
+    list:
+      - version
+      - name
+      - wrapper
+    delete:
+      - version
+      - name
+      - wrapper

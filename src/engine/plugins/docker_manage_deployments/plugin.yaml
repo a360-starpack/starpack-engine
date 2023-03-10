@@ -1,0 +1,23 @@
+name: docker_manage_deployments
+type: manage
+module_name: docker_manage
+entrypoint:
+  list: list_docker_package
+  delete: delete_docker_package
+  logs: get_docker_package_logs
+version: 1.0.0
+description: Exposes locally deployed Starpack resources in Docker to various management and logging operations.
+dataflow:
+  input:
+    list:
+      - version
+      - name
+      - wrapper
+    delete:
+      - version
+      - name
+      - wrapper
+    logs:
+      - version
+      - name
+      - wrapper

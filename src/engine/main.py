@@ -16,9 +16,9 @@ app = fastapi.FastAPI(
 )
 
 # Add the routes for all specialized routers
-app.include_router(package.router)
-app.include_router(deployment.router)
-app.include_router(plugins.router)
+app.include_router(package.router, tags=["package"])
+app.include_router(deployment.router, tags=["deployment"])
+app.include_router(plugins.router, tags=["plugins"])
 
 
 @app.exception_handler(Exception)
