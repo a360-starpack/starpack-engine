@@ -1,9 +1,6 @@
 import docker
 
-from typing import Dict, Any, Optional
-
-client = docker.from_env()
-
+from typing import Dict, Any, Optional, Callable
 
 def docker_format_filter(filter_items: Dict[str, Any]):
     return [f"{key}={value}" for key, value in filter_items.items()]
@@ -30,7 +27,10 @@ def list_docker_package(
     name: Optional[str] = None,
     version: Optional[str] = None,
     wrapper: Optional[str] = None,
+    client_factory: Callable = docker.from_env,
 ):
+    client = client_factory()
+
     filters = {"app": "starpack_package"}
 
     if name:
@@ -62,7 +62,10 @@ def delete_docker_package(
     name: Optional[str] = None,
     version: Optional[str] = None,
     wrapper: Optional[str] = None,
+    client_factory: Callable = docker.from_env,
 ):
+    client = client_factory()
+
     filters = {"app": "starpack_package"}
 
     if name:
@@ -88,7 +91,10 @@ def get_docker_package_logs(
     name: Optional[str] = None,
     version: Optional[str] = None,
     wrapper: Optional[str] = None,
+    client_factory: Callable = docker.from_env,
 ):
+    client = client_factory()
+
     filters = {"app": "starpack_package"}
 
     if name:
