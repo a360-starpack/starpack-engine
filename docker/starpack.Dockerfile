@@ -1,4 +1,4 @@
-FROM python:3.10-slim as build
+FROM python:3.13.0a4-slim as build
 
 RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --upgrade pip
 
